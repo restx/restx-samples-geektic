@@ -21,8 +21,9 @@ public class GeekCommander {
         this.searchResource = searchResource;
     }
 
-    public GeekCommand parse(String name, String pictureUrl,  String status) {
+    public GeekCommand parse(String twitterAccount, String name, String pictureUrl,  String status) {
         Geek geek = new Geek();
+        geek.twitterAccount = twitterAccount;
         geek.prenom = name;
         geek.nom = "";
 

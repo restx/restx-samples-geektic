@@ -10,6 +10,7 @@ public class Geek {
   public String nom;
   public String prenom;
   public String pictureUrl;
+  public String twitterAccount;
   public String email;
   public String ville;
     public List<String> likes = Lists.newArrayList();

@@ -16,9 +16,10 @@ public class GeekCommanderTest {
 
     @Test
     public void should_parse_command() throws Exception {
-        GeekCommander.GeekCommand command = commander.parse("Xavier Hanin", "http://img.io/me.jpg",  "#geektic #likes test");
+        GeekCommander.GeekCommand command = commander.parse("xavierhanin", "Xavier Hanin", "http://img.io/me.jpg",  "#geektic #likes test");
         assertThat(command).isNotNull();
         assertThat(command.getGeek()).isNotNull();
+        assertThat(command.getGeek().twitterAccount).isEqualTo("xavierhanin");
         assertThat(command.getGeek().prenom).isEqualTo("Xavier");
         assertThat(command.getGeek().nom).isEqualTo("Hanin");
         assertThat(command.getGeek().like(0)).isEqualTo("test");
@@ -26,9 +27,10 @@ public class GeekCommanderTest {
 
     @Test
     public void should_parse_command_with_multiple_likes() throws Exception {
-        GeekCommander.GeekCommand command = commander.parse("Xavier Hanin", "http://img.io/me.jpg", "#geektic #likes java test");
+        GeekCommander.GeekCommand command = commander.parse("xavierhanin", "Xavier Hanin", "http://img.io/me.jpg", "#geektic #likes java test");
         assertThat(command).isNotNull();
         assertThat(command.getGeek()).isNotNull();
+        assertThat(command.getGeek().twitterAccount).isEqualTo("xavierhanin");
         assertThat(command.getGeek().prenom).isEqualTo("Xavier");
         assertThat(command.getGeek().nom).isEqualTo("Hanin");
         assertThat(command.getGeek().like(0)).isEqualTo("java");

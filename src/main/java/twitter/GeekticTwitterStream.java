@@ -53,7 +53,7 @@ public class GeekticTwitterStream {
 
     public void onStatus(TwitterStatus twitterStatus) {
         GeekCommander.GeekCommand command = commander.parse(
-                twitterStatus.getName(), twitterStatus.getPictureUrl(), twitterStatus.getStatus());
+                twitterStatus.getScreenName(), twitterStatus.getName(), twitterStatus.getPictureUrl(), twitterStatus.getStatus());
         command.run();
     }
 
