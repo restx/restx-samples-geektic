@@ -1,9 +1,12 @@
 package services;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import geeks.Geek;
 import resources.SearchResource;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * User: xavierhanin
@@ -29,7 +32,26 @@ public class GeekCommander {
             geek.nom = name.substring(i + 1).trim();
         }
 
-        geek.like1 = "test";
+        List<String> args = Lists.newArrayList(Splitter.on(" ").split(status));
+
+        int likes = args.indexOf("#likes");
+        if (likes != -1) {
+            List<String> likesArgs = args.subList(likes + 1, args.size());
+            for (int j = 0; j < likesArgs.size(); j++) {
+                String like = likesArgs.get(j);
+                switch (j) {
+                    case 0:
+                        geek.like1 = like;
+                        break;
+                    case 1:
+                        geek.like2 = like;
+                        break;
+                    case 2:
+                        geek.like3 = like;
+                        break;
+                }
+            }
+        }
 
         return new GeekCommand(searchResource, geek);
     }

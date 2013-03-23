@@ -23,4 +23,15 @@ public class GeekCommanderTest {
         assertThat(command.getGeek().nom).isEqualTo("Hanin");
         assertThat(command.getGeek().like1).isEqualTo("test");
     }
+
+    @Test
+    public void should_parse_command_with_multiple_likes() throws Exception {
+        GeekCommander.GeekCommand command = commander.parse("Xavier Hanin", "#geektic #likes java test");
+        assertThat(command).isNotNull();
+        assertThat(command.getGeek()).isNotNull();
+        assertThat(command.getGeek().prenom).isEqualTo("Xavier");
+        assertThat(command.getGeek().nom).isEqualTo("Hanin");
+        assertThat(command.getGeek().like1).isEqualTo("java");
+        assertThat(command.getGeek().like2).isEqualTo("test");
+    }
 }
