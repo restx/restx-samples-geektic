@@ -1,5 +1,6 @@
 package geeks;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.hash.Hashing;
@@ -58,4 +59,8 @@ public class Geek {
   private static String plural(String word) {
     return word + "s";
   }
+
+    public String id() {
+        return Objects.firstNonNull(email, twitterAccount);
+    }
 }
