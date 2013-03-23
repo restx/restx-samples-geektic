@@ -1,5 +1,6 @@
 package geeks;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -41,13 +42,10 @@ public class GeekTest {
 
   @Test
   public void should_compute_gravatar() {
-    Geek geek = new Geek();
+    Geek geek = geek("LIKE1", "LIKE2", "LIKE3");
     geek.prenom = "PRENOM";
     geek.email = "david@gageot.net";
     geek.ville = "VILLE";
-    geek.like1 = "LIKE1";
-    geek.like2 = "LIKE2";
-    geek.like3 = "LIKE3";
 
     Result result = geek.toResult();
 
@@ -61,13 +59,10 @@ public class GeekTest {
 
     @Test
     public void should_use_pictureUrl_if_any() {
-      Geek geek = new Geek();
+        Geek geek = geek("LIKE1", "LIKE2", "LIKE3");
       geek.prenom = "PRENOM";
       geek.email = "david@gageot.net";
       geek.ville = "VILLE";
-      geek.like1 = "LIKE1";
-      geek.like2 = "LIKE2";
-      geek.like3 = "LIKE3";
       geek.pictureUrl = "http://img.io/me.jpg";
 
       Result result = geek.toResult();
@@ -80,11 +75,9 @@ public class GeekTest {
       assertThat(result.pictureUrl).isEqualTo("http://img.io/me.jpg");
     }
 
-  private static Geek geek(String like1, String like2, String like3) {
+  private static Geek geek(String... likes) {
     Geek geek = new Geek();
-    geek.like1 = like1;
-    geek.like2 = like2;
-    geek.like3 = like3;
+    geek.likes = Lists.newArrayList(likes);
     return geek;
   }
 }

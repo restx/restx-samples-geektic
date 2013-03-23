@@ -27,7 +27,7 @@ public class SearchResourceTest {
     @Test
     public void should_add_geek() throws Exception {
         Geek geek = new Geek();
-        geek.like1 = "java";
+        geek.likes.add("java");
 
         int size = searchResource.json("java").size();
         searchResource.addGeek(geek);

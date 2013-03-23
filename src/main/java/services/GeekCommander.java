@@ -36,21 +36,7 @@ public class GeekCommander {
 
         int likes = args.indexOf("#likes");
         if (likes != -1) {
-            List<String> likesArgs = args.subList(likes + 1, args.size());
-            for (int j = 0; j < likesArgs.size(); j++) {
-                String like = likesArgs.get(j);
-                switch (j) {
-                    case 0:
-                        geek.like1 = like;
-                        break;
-                    case 1:
-                        geek.like2 = like;
-                        break;
-                    case 2:
-                        geek.like3 = like;
-                        break;
-                }
-            }
+            geek.likes = Lists.newArrayList(args.subList(likes + 1, args.size()));
         }
 
         geek.pictureUrl = pictureUrl;

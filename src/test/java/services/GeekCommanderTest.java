@@ -21,7 +21,7 @@ public class GeekCommanderTest {
         assertThat(command.getGeek()).isNotNull();
         assertThat(command.getGeek().prenom).isEqualTo("Xavier");
         assertThat(command.getGeek().nom).isEqualTo("Hanin");
-        assertThat(command.getGeek().like1).isEqualTo("test");
+        assertThat(command.getGeek().like(0)).isEqualTo("test");
     }
 
     @Test
@@ -31,8 +31,8 @@ public class GeekCommanderTest {
         assertThat(command.getGeek()).isNotNull();
         assertThat(command.getGeek().prenom).isEqualTo("Xavier");
         assertThat(command.getGeek().nom).isEqualTo("Hanin");
-        assertThat(command.getGeek().like1).isEqualTo("java");
-        assertThat(command.getGeek().like2).isEqualTo("test");
+        assertThat(command.getGeek().like(0)).isEqualTo("java");
+        assertThat(command.getGeek().like(1)).isEqualTo("test");
         assertThat(command.getGeek().pictureUrl).isEqualTo("http://img.io/me.jpg");
     }
 }
