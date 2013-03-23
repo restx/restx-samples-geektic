@@ -11,6 +11,7 @@ import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import resources.MainResource;
 import resources.SearchResource;
 import resources.StaticResource;
+import twitter.GeekticTwitterStream;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,9 @@ public class MainGeekticServer {
 
     Module configuration = new MainGeekticConfiguration(new File("."));
 
-    new MainGeekticServer(configuration).start(port);
+      MainGeekticServer server = new MainGeekticServer(configuration);
+      server.injector.getInstance(GeekticTwitterStream.class).start();
+      server.start(port);
   }
 
   public void start(int port) throws IOException {

@@ -38,7 +38,7 @@ public class Geek {
     String trimmedSearch = search.trim();
 
     for (String term : terms) {
-      if (matches(trimmedSearch, term.trim())) {
+      if (matches(trimmedSearch, Strings.nullToEmpty(term).trim())) {
         return true;
       }
     }
