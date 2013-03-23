@@ -27,6 +27,7 @@ public class GeekticTwitterStream {
                 GeekticTwitterStream.this.onStatus(new TwitterStatus()
                         .setScreenName(status.getUser().getScreenName())
                         .setName(status.getUser().getName())
+                        .setPictureUrl(status.getUser().getProfileImageURL())
                         .setStatus(status.getText()));
             }
 
@@ -51,13 +52,15 @@ public class GeekticTwitterStream {
     }
 
     public void onStatus(TwitterStatus twitterStatus) {
-        GeekCommander.GeekCommand command = commander.parse(twitterStatus.getName(), twitterStatus.getStatus());
+        GeekCommander.GeekCommand command = commander.parse(
+                twitterStatus.getName(), twitterStatus.getPictureUrl(), twitterStatus.getStatus());
         command.run();
     }
 
     public static class TwitterStatus {
         private String screenName;
         private String name;
+        private String pictureUrl;
         private String status;
 
         @Override
@@ -65,8 +68,18 @@ public class GeekticTwitterStream {
             return "TwitterStatus{" +
                     "screenName='" + screenName + '\'' +
                     ", name='" + name + '\'' +
+                    ", pictureUrl='" + pictureUrl + '\'' +
                     ", status='" + status + '\'' +
                     '}';
+        }
+
+        public TwitterStatus setPictureUrl(final String pictureUrl) {
+            this.pictureUrl = pictureUrl;
+            return this;
+        }
+
+        public String getPictureUrl() {
+            return pictureUrl;
         }
 
         public TwitterStatus setScreenName(final String screenName) {
