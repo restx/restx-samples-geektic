@@ -16,6 +16,6 @@ public class Result {
     this.like1 = like1;
     this.like2 = like2;
     this.like3 = like3;
-    this.gravatar = "http://gravatar.com/avatar/" + Hashing.md5().hashBytes(email.getBytes());
+    this.gravatar = email == null ? null : ("http://gravatar.com/avatar/" + Hashing.md5().hashBytes(email.getBytes()));
   }
 }
