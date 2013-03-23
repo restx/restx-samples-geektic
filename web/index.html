@@ -21,7 +21,7 @@ script: controllers.coffee
         <img class="empty" ng-class="{top: !(geeks.length>i), pastop: geeks.length>i}"
              src="/static/[[version]]/img/geek{{i+1}}.jpg">
         <img class="result" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}"
-             ng-src="{{geeks[i].gravatar}}?s=256">
+             ng-src="{{geeks[i].pictureUrl}}?s=256">
 
         <div class="caption" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}" ng-cloak>
             <p class="name">{{geeks[i].prenom}}</p>

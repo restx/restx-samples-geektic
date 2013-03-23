@@ -1,11 +1,12 @@
 package geeks;
 
 import com.google.common.base.Strings;
-import com.google.gson.Gson;
+import com.google.common.hash.Hashing;
 
 public class Geek {
   public String nom;
   public String prenom;
+  public String pictureUrl;
   public String email;
   public String ville;
   public String like1;
@@ -13,15 +14,11 @@ public class Geek {
   public String like3;
 
   public Result toResult() {
-    return new Result(prenom, ville, like1, like2, like3, email);
-  }
-
-  public static void main(String[] args) throws Exception {
-    Geek geek = new Geek();
-    geek.email = "david@gageot.net";
-    geek.nom = "David";
-    geek.prenom = "Gageot";
-    System.out.println(new Gson().toJson(geek));
+      String pictureUrl;
+      if (this.pictureUrl != null) pictureUrl = this.pictureUrl;
+      else if (email == null) pictureUrl = null;
+      else pictureUrl = ("http://gravatar.com/avatar/" + Hashing.md5().hashBytes(email.getBytes()));
+      return new Result(prenom, ville, like1, like2, like3, pictureUrl);
   }
 
   public boolean matches(String search) {

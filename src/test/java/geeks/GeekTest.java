@@ -56,8 +56,29 @@ public class GeekTest {
     assertThat(result.like2).isEqualTo("LIKE2");
     assertThat(result.like3).isEqualTo("LIKE3");
     assertThat(result.ville).isEqualTo("VILLE");
-    assertThat(result.gravatar).isEqualTo("http://gravatar.com/avatar/f0887bf6175ba40dca795eb37883a8cf");
+    assertThat(result.pictureUrl).isEqualTo("http://gravatar.com/avatar/f0887bf6175ba40dca795eb37883a8cf");
   }
+
+    @Test
+    public void should_use_pictureUrl_if_any() {
+      Geek geek = new Geek();
+      geek.prenom = "PRENOM";
+      geek.email = "david@gageot.net";
+      geek.ville = "VILLE";
+      geek.like1 = "LIKE1";
+      geek.like2 = "LIKE2";
+      geek.like3 = "LIKE3";
+      geek.pictureUrl = "http://img.io/me.jpg";
+
+      Result result = geek.toResult();
+
+      assertThat(result.prenom).isEqualTo("PRENOM");
+      assertThat(result.like1).isEqualTo("LIKE1");
+      assertThat(result.like2).isEqualTo("LIKE2");
+      assertThat(result.like3).isEqualTo("LIKE3");
+      assertThat(result.ville).isEqualTo("VILLE");
+      assertThat(result.pictureUrl).isEqualTo("http://img.io/me.jpg");
+    }
 
   private static Geek geek(String like1, String like2, String like3) {
     Geek geek = new Geek();
