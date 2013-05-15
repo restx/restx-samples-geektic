@@ -5,6 +5,8 @@
 @green: rgb(217, 141, 166);
 @blue: rgb(0, 163, 219);
 @star_size: 64px;
+@square_width: 250px;
+@square_height: 250px;
 
 [ng-cloak] {
   display: none !important;
@@ -46,20 +48,25 @@ body {
       padding: 5px;
     }
 
-    .form-search {
-      text-align: center;
-      input {
-        width: 200px;
-      }
-    }
-
-    #geek1 {
+    #search {
       background-color: @blue;
-      -webkit-transform: rotateZ(-5deg) translateX(-20px) translateY(-20px);
+      .transform(rotateZ(-5deg) translateX(-20px) translateY(-20px));
+      .transition(-webkit-transform 0.5s);
+
+      &:hover {
+        .transform(rotateZ(0deg) translateX(0px) translateY(0px));
+      }
 
       span {
         display: block;
         margin-top: 50px;
+      }
+
+      .form-search {
+        text-align: center;
+        input {
+          width: 200px;
+        }
       }
     }
 
@@ -80,17 +87,14 @@ body {
       height: 100%;
     }
 
-    #geek9 {
-      background: url('/static/[[version]]/img/geek8.jpg') no-repeat;
-    }
-
-    #geek1, #geek2, #geek3, #geek4, #geek5, #geek6, #geek7, #geek8, #geek9 {
-      width: 250px;
-      height: 250px;
+    .square {
+      width: @square_width;
+      height: @square_height;
       float: left;
       margin: 0;
       border-top: 1px solid #954d5a;
       border-left: 1px solid #954d5a;
+      .transition(opacity 0.8s);
       .background-size(cover);
     }
 
@@ -110,6 +114,62 @@ body {
         h3 {
           margin: 0;
           padding: 0;
+        }
+      }
+    }
+
+    #intro {
+      .back('/static/[[version]]/img/geek7.jpg', @square_width, @square_height);
+      .transition(all 0.8s ease);
+
+      .form {
+        padding: 20px;
+
+        .like {
+          width: 120px;
+        }
+
+        .actions {
+          text-align: right;
+          margin: 10px 45px 0 0;
+
+          a {
+            padding-left: 20px;
+          }
+        }
+      }
+
+      #inscription {
+        display: block;
+        padding: 20px;
+        text-align: center;
+        margin-top: 55px;
+      }
+    }
+
+    &.default {
+      #intro {
+        .form {
+          display: none;
+        }
+      }
+    }
+
+    &.inscription {
+      .square:nth-child(5), .square:nth-child(6), .square:nth-child(8) {
+        opacity: 0;
+      }
+
+      #intro {
+        margin-top: -@square_height;
+        margin-left: -@square_width;
+        position: relative;
+        z-index: 9999;
+
+        .back('/static/[[version]]/img/geek7.jpg', @square_width * 2, @square_height * 2);
+
+        #inscription {
+          display: none;
         }
       }
     }
@@ -179,4 +239,11 @@ body {
   -moz-transition: @arg1;
   -o-transition: @arg1;
   transition: @arg1;
+}
+
+.transform(@arg1) {
+  -webkit-transform: @arg1;
+  -moz-transform: @arg1;
+  -o-transform: @arg1;
+  transform: @arg1;
 }

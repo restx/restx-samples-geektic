@@ -3,8 +3,8 @@ layout: layouts/default.html
 title: CodeStory - Geektic
 script: controllers.coffee
 ---
-<div id="main" ng-controller="homeController">
-    <div id="geek1">
+<div id="main" ng-controller="homeController" ng-class="mode">
+    <div class="square" id="search">
         <span>
         <h1 class="title">G33kt1c</h1>
 
@@ -17,29 +17,58 @@ script: controllers.coffee
         </form>
         </span>
     </div>
-    <div id="geek{{i+2}}" ng-repeat="i in [0,1,2,3,4,5,6]" ng-class-even="{even: i}">
-        <img class="empty" ng-class="{top: !(geeks.length>i), pastop: geeks.length>i}"
-             src="/static/[[version]]/img/geek{{i+1}}.jpg">
+    <div class="square" id="geek{{i+1}}" ng-repeat="i in [0,1,2,3,4,5,6]" ng-class-even="{even: i}" ng-cloak>
+        <div class="image backgroundSquare" ng-class="{shown: !(geeks.length>i), hidden: geeks.length>i}">
+            <img class="empty" ng-class="{top: !(geeks.length>i), pastop: geeks.length>i}"
+                 src="/static/[[version]]/img/geek{{i+1}}.jpg">
+        </div>
         <img class="result" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}"
              ng-src="{{geeks[i].pictureUrl}}?s=256">
 
-        <div class="caption" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}" ng-cloak>
-            <p class="name">{{geeks[i].prenom}}</p>
+        <div class="image resultSquare" ng-class="{hidden: geeks.length<=i, shown: geeks.length>i}">
+            <div class="caption" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}" ng-cloak>
+                <p class="name">{{geeks[i].prenom}}</p>
 
-            <p class="like">+1 {{geeks[i].like1}}, {{geeks[i].like2}}, {{geeks[i].like3}}</p>
+                <p class="like">+1 {{geeks[i].like1}}, {{geeks[i].like2}}, {{geeks[i].like3}}</p>
+            </div>
         </div>
     </div>
-    <div id="geek9">
+    <div class="square" id="intro">
         <div class="full-caption">
             <div class="inner">
-                <h3>Lorem Ipsum</h3>
+                <div id="inscription">
+                    <p><a class="btn btn-primary" ng-click="setMode('inscription')">Inscription</a></p>
 
-                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none" data-text="#codestory #geektic #likes ">Signup</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none"
+                       data-text="#codestory #geektic #likes ">Tweet to signup!</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "https://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam
-                    nonummy nibh euismod tincidunt ut laoreet
-                    dolore magna aliquam erat volutpat.</p>
+                <div class="form">
+                    <h3>Inscris toi !</h3>
+                    <div>
+                    <input type="text" placeholder="Prénom" ng-model="geek.prenom">
+                    <input type="text" placeholder="Nom" ng-model="geek.nom">
+                    </div>
+                    <div>
+                    <input class="like" type="text" placeholder="Like 1" ng-model="geek.like1">
+                    <input class="like" type="text" placeholder="Like 2" ng-model="geek.like2">
+                    <input class="like" type="text" placeholder="Like 3" ng-model="geek.like3">
+                    </div>
+
+                    <div class="actions">
+                        <a class="inscription btn btn-primary" ng-click="inscription(geek)">M'inscrire</a>
+                        <a class="cancel btn btn-warning" ng-click="setMode('default')">Annuler</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
