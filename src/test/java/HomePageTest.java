@@ -36,6 +36,7 @@ public class HomePageTest extends AbstractPageTest {
 
         fill(".signup.form .prenom").with("John");
         fill(".signup.form .nom").with("Doe");
+        fill(".signup.form .email").with("test@acme.com");
         fill(".signup.form .like1").with("signuptest");
 
         find(".signup.form .inscription").click();
@@ -45,5 +46,7 @@ public class HomePageTest extends AbstractPageTest {
         fill("#search input").with("signuptest");
 
         await().atMost(5, TimeUnit.SECONDS).until(".resultSquare.shown").hasSize(1);
+
+        assertThat(find(".resultSquare.shown img").first().getAttribute("src")).isEqualTo("http://gravatar.com/avatar/cd39cb289b96854268bbdd63908230ab?s=256");
     }
 }

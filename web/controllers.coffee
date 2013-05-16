@@ -25,7 +25,7 @@ homeController = ($scope, $http, $location) ->
     $scope.mode = mode
 
   $scope.inscription = (geek) ->
-    g = { prenom: geek.prenom, nom: geek.nom, likes: [] }
+    g = { prenom: geek.prenom, nom: geek.nom, email: geek.email, likes: [] }
     for num in [1..3]
       do (num) ->
         if geek['like' + num] != ''

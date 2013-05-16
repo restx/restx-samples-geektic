@@ -22,10 +22,10 @@ script: controllers.coffee
             <img class="empty" ng-class="{top: !(geeks.length>i), pastop: geeks.length>i}"
                  src="/static/[[version]]/img/geek{{i+1}}.jpg">
         </div>
-        <img class="result" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}"
-             ng-src="{{geeks[i].pictureUrl}}?s=256">
 
         <div class="image resultSquare" ng-class="{hidden: geeks.length<=i, shown: geeks.length>i}">
+            <img class="result" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}"
+                 ng-src="{{geeks[i].pictureUrl}}?s=256">
             <div class="caption" ng-class="{pastop: !(geeks.length>i), top: geeks.length>i}" ng-cloak>
                 <p class="name">{{geeks[i].prenom}}</p>
 
@@ -57,6 +57,9 @@ script: controllers.coffee
                     <div>
                     <input class="prenom" type="text" placeholder="First name" ng-model="geek.prenom">
                     <input class="nom" type="text" placeholder="Last name" ng-model="geek.nom">
+                    </div>
+                    <div>
+                    <input class="email" type="text" placeholder="Email (for gravatar only)" ng-model="geek.email">
                     </div>
                     <div>
                     <input class="like like1" type="text" placeholder="Like 1" ng-model="geek.like1">
