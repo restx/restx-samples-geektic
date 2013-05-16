@@ -3,7 +3,7 @@ package services;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import geeks.Geek;
-import resources.SearchResource;
+import resources.GeeksResource;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
  * Time: 1:42 PM
  */
 public class GeekCommander {
-    private SearchResource searchResource;
+    private GeeksResource geeksResource;
 
     @Inject
-    public GeekCommander(SearchResource searchResource) {
-        this.searchResource = searchResource;
+    public GeekCommander(GeeksResource geeksResource) {
+        this.geeksResource = geeksResource;
     }
 
     public GeekCommand parse(String twitterAccount, String name, String pictureUrl,  String status) {
@@ -42,15 +42,15 @@ public class GeekCommander {
 
         geek.pictureUrl = pictureUrl;
 
-        return new GeekCommand(searchResource, geek);
+        return new GeekCommand(geeksResource, geek);
     }
 
     public static class GeekCommand implements Runnable {
-        private final SearchResource searchResource;
+        private final GeeksResource geeksResource;
         private final Geek geek;
 
-        public GeekCommand(SearchResource searchResource, Geek geek) {
-            this.searchResource = searchResource;
+        public GeekCommand(GeeksResource geeksResource, Geek geek) {
+            this.geeksResource = geeksResource;
             this.geek = geek;
         }
 
@@ -60,7 +60,7 @@ public class GeekCommander {
 
         @Override
         public void run() {
-            searchResource.addGeek(geek);
+            geeksResource.addGeek(geek);
         }
     }
 

@@ -10,14 +10,14 @@ import restx.annotations.RestxResource;
 import java.util.List;
 
 @RestxResource
-public class SearchResource {
+public class GeeksResource {
     private List<Geek> geeks;
 
-    public SearchResource() {
+    public GeeksResource() {
         this(Lists.<Geek>newArrayList());
     }
 
-    public SearchResource(List<Geek> geeks) {
+    public GeeksResource(List<Geek> geeks) {
         this.geeks = geeks;
     }
 

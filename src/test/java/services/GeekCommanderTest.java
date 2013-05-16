@@ -1,7 +1,7 @@
 package services;
 
 import org.junit.Test;
-import resources.SearchResource;
+import resources.GeeksResource;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -12,7 +12,7 @@ import static org.fest.assertions.Assertions.assertThat;
  */
 public class GeekCommanderTest {
 
-    private GeekCommander commander = new GeekCommander(new SearchResource());
+    private GeekCommander commander = new GeekCommander(new GeeksResource());
 
     @Test
     public void should_parse_command() throws Exception {
