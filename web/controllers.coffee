@@ -4,7 +4,7 @@ homeController = ($scope, $http, $location) ->
 
   $scope.refresh = ->
     $location.url "?q=#{$scope.search}";
-    $http.get("/search?q=#{$scope.search}").success (json) ->
+    $http.get("/geeks?q=#{$scope.search}").success (json) ->
       $scope.geeks = json
 
   $scope.search = $location.search().q || ''

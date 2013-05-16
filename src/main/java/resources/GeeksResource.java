@@ -33,7 +33,7 @@ public class GeeksResource {
         geeks.add(geek);
     }
 
-  @GET("/search")
+  @GET("/geeks")
   public List<Result> search(String q) {
     List<Result> results = Lists.newArrayList();
 
