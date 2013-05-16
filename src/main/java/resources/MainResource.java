@@ -1,18 +1,24 @@
 package resources;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
+import restx.*;
+import restx.factory.Component;
 
-import java.io.File;
+import java.io.IOException;
 
-@Path("/")
-public class MainResource extends AbstractResource {
-  @GET
-  @Produces("text/html;charset=UTF-8")
-  public Response index() {
-    File file = file("index.html");
-    return ok(templatize(read(file)), file.lastModified());
-  }
+@Component
+public class MainResource extends StdRoute {
+    private final WebResources webResources;
+
+    public MainResource(WebResources webResources) {
+        super("main", new StdRouteMatcher("GET", "/"));
+        this.webResources = webResources;
+    }
+
+    @Override
+    public void handle(RestxRouteMatch match, RestxRequest req, RestxResponse resp, RestxContext ctx) throws IOException {
+        resp.setContentType("text/html");
+        resp.getWriter().print(webResources.templatize(
+                webResources.read(
+                    webResources.file("index.html").get())));
+    }
 }

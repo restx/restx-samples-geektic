@@ -3,10 +3,12 @@ package webserver.compilers;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.lesscss.LessException;
+import restx.factory.Component;
 
 import java.io.File;
 import java.io.IOException;
 
+@Component
 public class LessCompiler {
   private final org.lesscss.LessCompiler compiler;
 

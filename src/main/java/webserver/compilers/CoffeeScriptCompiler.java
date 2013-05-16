@@ -5,12 +5,14 @@ import com.google.common.io.Files;
 import org.jcoffeescript.JCoffeeScriptCompileException;
 import org.jcoffeescript.JCoffeeScriptCompiler;
 import org.jcoffeescript.Option;
+import restx.factory.Component;
 
 import java.io.File;
 import java.io.IOException;
 
 import static java.util.Arrays.asList;
 
+@Component
 public class CoffeeScriptCompiler {
   private final JCoffeeScriptCompiler compiler;
 

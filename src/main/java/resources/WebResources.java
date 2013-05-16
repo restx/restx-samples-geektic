@@ -1,28 +1,22 @@
 package resources;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
-import com.sun.jersey.api.NotFoundException;
+import restx.factory.Component;
 import webserver.templating.ContentWithVariables;
 import webserver.templating.Layout;
 import webserver.templating.Template;
 import webserver.templating.YamlFrontMatter;
 
-import javax.ws.rs.core.Response;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 
-public abstract class AbstractResource {
-  private static final long ONE_YEAR = 1000L * 3600 * 24 * 365;
-
-  protected Response ok(Object entity, long modified) {
-    return Response.ok(entity).lastModified(new Date(modified)).expires(new Date(modified + ONE_YEAR)).header("Cache-Control", "public").build();
-  }
+@Component
+public class WebResources {
 
   protected String templatize(String body) {
     return templatize(body, ImmutableMap.of());
@@ -36,7 +30,10 @@ public abstract class AbstractResource {
 
     String layout = yamlVariables.get("layout");
     if (layout != null) {
-      content = new Layout(read(file(layout))).apply(content);
+        Optional<File> file = file(layout);
+        if (file.isPresent()) {
+            content = new Layout(read(file.get())).apply(content);
+        }
     }
 
     return new Template().apply(content, ImmutableMap.builder().putAll(variables).putAll(yamlVariables).build());
@@ -50,15 +47,15 @@ public abstract class AbstractResource {
     }
   }
 
-  protected File file(String parent, String path) {
+  protected Optional<File> file(String parent, String path) {
     return file(new File(parent, path).getPath());
   }
 
-  protected File file(String path) {
+  protected Optional<File> file(String path) {
     if (!exists(path)) {
-      throw new NotFoundException();
+      return Optional.absent();
     }
-    return new File("web", path);
+    return Optional.of(new File("web", path));
   }
 
   protected boolean exists(String path) {

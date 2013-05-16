@@ -1,69 +1,77 @@
 package resources;
 
+import com.google.common.base.Optional;
+import com.google.common.io.Files;
+import restx.*;
+import restx.factory.Component;
+import restx.server.HTTP;
 import webserver.compilers.CoffeeScriptCompiler;
 import webserver.compilers.LessCompiler;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-
 import java.io.File;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-@Path("/static/{version}")
-public class StaticResource extends AbstractResource {
-  private final LessCompiler lessCompiler;
-  private final CoffeeScriptCompiler coffeeScriptCompiler;
+@Component
+public class StaticResource extends StdRoute {
 
-  @Inject
-  public StaticResource(CoffeeScriptCompiler coffeeScriptCompiler, LessCompiler lessCompiler) {
-    this.coffeeScriptCompiler = coffeeScriptCompiler;
-    this.lessCompiler = lessCompiler;
-  }
+    private final CoffeeScriptCompiler coffeeScriptCompiler;
+    private final LessCompiler lessCompiler;
+    private final WebResources webResources;
 
-  @GET
-  @Path("{path : .*\\.css}")
-  @Produces("text/css;charset=UTF-8")
-  public File css(@PathParam("path") String path) {
-    return file("static", path);
-  }
+    @Inject
+    public StaticResource(CoffeeScriptCompiler coffeeScriptCompiler, LessCompiler lessCompiler, final WebResources webResources) {
+        super("static", new RestxRouteMatcher() {
+            @Override
+            public Optional<RestxRouteMatch> match(RestxHandler handler, String method, String path) {
+                if (path.startsWith("/static/")) {
+                    return Optional.of(new RestxRouteMatch(handler, path));
+                } else {
+                    return Optional.absent();
+                }
+            }
+        });
+        this.coffeeScriptCompiler = coffeeScriptCompiler;
+        this.lessCompiler = lessCompiler;
+        this.webResources = webResources;
+    }
 
-  @GET
-  @Path("{path : .*\\.js}")
-  @Produces("application/javascript;charset=UTF-8")
-  public File js(@PathParam("path") String path) {
-    return file("static", path);
-  }
+    @Override
+    public void handle(RestxRouteMatch match, RestxRequest req, RestxResponse resp, RestxContext ctx) throws IOException {
+        String path = match.getPath();
+        Matcher matcher = Pattern.compile("/static/[^/]+/(.*)").matcher(path);
+        if (!matcher.matches()) {
+            notFound(match, resp);
+            return;
+        }
 
-  @GET
-  @Path("{path : .*\\.less}")
-  @Produces("text/css;charset=UTF-8")
-  public Response less(@PathParam("path") String path) {
-    File less = file(path);
-    return ok(templatize(lessCompiler.compile(less)), less.lastModified());
-  }
+        if (path.endsWith(".coffee") || path.endsWith(".less")) {
+            Optional<File> file = webResources.file(matcher.group(1));
+            if (!file.isPresent()) {
+                notFound(match, resp);
+                return;
+            }
 
-  @GET
-  @Path("{path : .*\\.coffee}")
-  @Produces("application/javascript;charset=UTF-8")
-  public Response coffee(@PathParam("path") String path) {
-    File coffee = file(path);
-    return ok(coffeeScriptCompiler.compile(coffee), coffee.lastModified());
-  }
+            if (path.endsWith(".coffee")) {
+                resp.setContentType("application/javascript;charset=UTF-8");
+                resp.getWriter().print(coffeeScriptCompiler.compile(file.get()));
+                return;
+            }
+            if (path.endsWith(".less")) {
+                resp.setContentType("text/css;charset=UTF-8");
+                resp.getWriter().print(lessCompiler.compile(file.get()));
+                return;
+            }
+        }
 
-  @GET
-  @Path("{path : .*\\.png}")
-  @Produces("image/png")
-  public File png(@PathParam("path") String path) {
-    return file("static", path);
-  }
-
-  @GET
-  @Path("{path : .*\\.jpg}")
-  @Produces("image/jpeg")
-  public File jpg(@PathParam("path") String path) {
-    return file("static", path);
-  }
+        Optional<File> file = webResources.file("static", matcher.group(1));
+        if (!file.isPresent()) {
+            notFound(match, resp);
+            return;
+        }
+        resp.setContentType(HTTP.getContentTypeFromExtension(path).or("application/octet-stream"));
+        Files.copy(file.get(), resp.getOutputStream());
+    }
 }
