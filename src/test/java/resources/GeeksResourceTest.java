@@ -17,15 +17,15 @@ public class GeeksResourceTest {
 
   @Test
   public void should_find_nothing() {
-    List<Result> geeks = geeksResource.json("");
+    List<Result> geeks = geeksResource.search("");
 
     assertThat(geeks).isEmpty();
   }
 
   @Test
   public void should_find_geek_by_like() {
-    assertThat(geeksResource.json("Smalltalk")).hasSize(1);
-    assertThat(geeksResource.json("java")).hasSize(18);
+    assertThat(geeksResource.search("Smalltalk")).hasSize(1);
+    assertThat(geeksResource.search("java")).hasSize(18);
   }
 
     @Test
@@ -33,8 +33,8 @@ public class GeeksResourceTest {
         Geek geek = new Geek();
         geek.likes.add("java");
 
-        int size = geeksResource.json("java").size();
+        int size = geeksResource.search("java").size();
         geeksResource.addGeek(geek);
-        assertThat(geeksResource.json("java")).hasSize(size + 1);
+        assertThat(geeksResource.search("java")).hasSize(size + 1);
     }
 }

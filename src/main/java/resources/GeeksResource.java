@@ -34,7 +34,7 @@ public class GeeksResource {
     }
 
   @GET("/search")
-  public List<Result> json(String q) {
+  public List<Result> search(String q) {
     List<Result> results = Lists.newArrayList();
 
     for (Geek geek : geeks) {
