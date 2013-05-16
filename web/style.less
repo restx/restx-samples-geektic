@@ -122,7 +122,7 @@ body {
       .back('/static/[[version]]/img/geek7.jpg', @square_width, @square_height);
       .transition(all 0.8s ease);
 
-      .form {
+      .signup.form {
         padding: 20px;
 
         .like {
@@ -139,6 +139,12 @@ body {
         }
       }
 
+      .user {
+        padding: 20px;
+        text-align: center;
+        margin-top: 55px;
+      }
+
       #inscription {
         display: block;
         padding: 20px;
@@ -149,7 +155,7 @@ body {
 
     &.default {
       #intro {
-        .form {
+        .signup.form, .user {
           display: none;
         }
       }
@@ -168,7 +174,15 @@ body {
 
         .back('/static/[[version]]/img/geek7.jpg', @square_width * 2, @square_height * 2);
 
-        #inscription {
+        #inscription, .user {
+          display: none;
+        }
+      }
+    }
+
+    &.authenticated {
+      #intro {
+        #inscription, .signup.form {
           display: none;
         }
       }

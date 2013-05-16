@@ -21,7 +21,7 @@ public class Geek {
       if (this.pictureUrl != null) pictureUrl = this.pictureUrl;
       else if (email == null) pictureUrl = null;
       else pictureUrl = ("http://gravatar.com/avatar/" + Hashing.md5().hashBytes(email.getBytes()));
-      return new Result(prenom, ville, like(0), like(1), like(2), pictureUrl);
+      return new Result(prenom, nom, ville, like(0), like(1), like(2), pictureUrl);
   }
 
     public String like(int i) {

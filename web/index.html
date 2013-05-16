@@ -37,7 +37,7 @@ script: controllers.coffee
         <div class="full-caption">
             <div class="inner">
                 <div id="inscription">
-                    <p><a class="btn btn-primary" ng-click="setMode('inscription')">Inscription</a></p>
+                    <p><a id="showSignupBtn" class="btn btn-primary" ng-click="setMode('inscription')">Inscription</a></p>
 
                     <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none"
                        data-text="#codestory #geektic #likes ">Tweet to signup!</a>
@@ -52,22 +52,27 @@ script: controllers.coffee
                     }(document, "script", "twitter-wjs");</script>
                 </div>
 
-                <div class="form">
+                <div class="signup form">
                     <h3>Inscris toi !</h3>
                     <div>
-                    <input type="text" placeholder="Prénom" ng-model="geek.prenom">
-                    <input type="text" placeholder="Nom" ng-model="geek.nom">
+                    <input class="prenom" type="text" placeholder="Prénom" ng-model="geek.prenom">
+                    <input class="nom" type="text" placeholder="Nom" ng-model="geek.nom">
                     </div>
                     <div>
-                    <input class="like" type="text" placeholder="Like 1" ng-model="geek.like1">
-                    <input class="like" type="text" placeholder="Like 2" ng-model="geek.like2">
-                    <input class="like" type="text" placeholder="Like 3" ng-model="geek.like3">
+                    <input class="like like1" type="text" placeholder="Like 1" ng-model="geek.like1">
+                    <input class="like like2" type="text" placeholder="Like 2" ng-model="geek.like2">
+                    <input class="like like3" type="text" placeholder="Like 3" ng-model="geek.like3">
                     </div>
 
                     <div class="actions">
                         <a class="inscription btn btn-primary" ng-click="inscription(geek)">M'inscrire</a>
                         <a class="cancel btn btn-warning" ng-click="setMode('default')">Annuler</a>
                     </div>
+                </div>
+
+                <div class="user">
+                    <h3>{{ geek.prenom }}  {{ geek.nom }}</h3>
+                    <a id="logout" class="btn btn-primary" ng-click="logout()">Se déconnecter</a>
                 </div>
             </div>
         </div>

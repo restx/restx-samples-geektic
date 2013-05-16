@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import geeks.Geek;
 import geeks.Result;
 import restx.annotations.GET;
+import restx.annotations.POST;
 import restx.annotations.RestxResource;
 
 import java.util.List;
@@ -21,16 +22,18 @@ public class GeeksResource {
         this.geeks = geeks;
     }
 
-    public void addGeek(Geek geek) {
+    @POST("/geeks")
+    public Result addGeek(Geek geek) {
         for (int i = 0; i < geeks.size(); i++) {
             Geek g = geeks.get(i);
             if (Objects.equal(g.id(), geek.id())) {
                 geeks.set(i, geek);
-                return;
+                return geek.toResult();
             }
         }
 
         geeks.add(geek);
+        return geek.toResult();
     }
 
   @GET("/geeks")

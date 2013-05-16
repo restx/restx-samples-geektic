@@ -9,12 +9,15 @@ homeController = ($scope, $http, $location) ->
 
   $scope.search = $location.search().q || ''
 
-  $scope.geek =
-    prenom: ''
-    nom: ''
-    like1: ''
-    like2: ''
-    like3: ''
+  $scope.clearGeek = () ->
+    $scope.geek =
+      prenom: ''
+      nom: ''
+      like1: ''
+      like2: ''
+      like3: ''
+
+  $scope.clearGeek()
 
   $scope.mode = 'default'
 
@@ -22,6 +25,19 @@ homeController = ($scope, $http, $location) ->
     $scope.mode = mode
 
   $scope.inscription = (geek) ->
-    console.log 'inscription', geek
+    g = { prenom: geek.prenom, nom: geek.nom, likes: [] }
+    for num in [1..3]
+      do (num) ->
+        if geek['like' + num] != ''
+          g.likes.push(geek['like' + num])
+
+    console.log 'inscription', g
+    $http.post("/geeks", g).success (geek) ->
+      $scope.geek = geek
+      $scope.setMode('authenticated')
+
+  $scope.logout = () ->
+    $scope.clearGeek()
+    $scope.setMode('default')
 
   $scope.refresh()

@@ -26,4 +26,24 @@ public class HomePageTest extends AbstractPageTest {
 
         await().atMost(5, TimeUnit.SECONDS).until(".resultSquare.shown").hasSize(1);
     }
+
+
+    @Test
+    public void should_signup_geek() throws InterruptedException {
+      goTo("/");
+
+        find("#showSignupBtn").click();
+
+        fill(".signup.form .prenom").with("John");
+        fill(".signup.form .nom").with("Doe");
+        fill(".signup.form .like1").with("signuptest");
+
+        find(".signup.form .inscription").click();
+
+        await().atMost(5, TimeUnit.SECONDS).until("#intro .user h3").containsText("John Doe");
+
+        fill("#search input").with("signuptest");
+
+        await().atMost(5, TimeUnit.SECONDS).until(".resultSquare.shown").hasSize(1);
+    }
 }
