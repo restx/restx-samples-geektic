@@ -61,6 +61,6 @@ public class Geek {
   }
 
     public String id() {
-        return Objects.firstNonNull(email, twitterAccount);
+        return Objects.firstNonNull(email, Objects.firstNonNull(twitterAccount, prenom + " " + nom));
     }
 }
