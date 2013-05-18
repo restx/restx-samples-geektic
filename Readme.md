@@ -1,22 +1,39 @@
-Application geektic pour DevoxxFR 2013
+# Geektic RESTX.io sample app
 
-Pourquoi un framework web maison ?
-==================================
 
- + Pour essayer
- + Parceque ce framework demarre tres vite et les tests en sont d'autant plus rapides
+## Credits
 
-TODO :
-======
+This app is based on code developed for Devoxx Code Story 2013 edition.
 
- + Preparer le deploiement
- + Enlever le bouton Search
- + Améliorer le rendu avec par exemple une mosaique
- + Rechercher plusieurs termes
- + Cibler sur une ville
- + Cibler sur un perimetre geographique
- + S'ajouter a la liste (saisir son email, ses gouts et valider a reception d'un email)
- + Sauvegarde des geeks
- + Donner ses coordonnees actuelle (checkin)
- + Partager le site sur twitter
- + Changer l'url en live
+Original repo: https://github.com/CodeStory/code-story-geektic
+
+## Running
+
+Build with `mvn package`
+
+Run with `java -Xmx512M -cp target/classes:target/dependency/* main.MainGeekticServer`
+
+You will need a MongoDB server running on localhost.
+
+
+## Features
+
+Here is the list of features this sample demonstrate:
+
+### No servlet
+
+This sample uses the simple framework support of restx, and as such does not require a servlet container.
+
+### MongoDB integration
+
+This sample uses the restx-jongo module and demonstrates storing data in MongoDB, using [jongo](http://jongo.org) API to access mongo.
+It also demonstrates the integration of mongo in spec tests, setting the collections in the given section.
+
+### Using RESTX to serve static assets / compile coffee and less resources on the fly
+
+Although RESTX is not designed as a web framework, this sample demonstrates how RESTX routes can be used to serve other content than JSON, in this case static content, as well as coffeescript and less resources compiled on the fly.
+
+### FluentLenium / PhantomJS / Ghostdriver
+
+Also not related to RESTX, this sample demonstrates how to use fluentlenium / phantomJS / ghost driver together to test the pages accessing the RESTX base REST API.
+The web UI itself is implemented using AngularJS.
