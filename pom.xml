@@ -12,7 +12,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <restx.version>0.2.5</restx.version>
+      <restx.version>0.2.6-SNAPSHOT</restx.version>
   </properties>
 
   <build>
@@ -118,7 +118,17 @@
       </dependency>
       <dependency>
           <groupId>io.restx</groupId>
+          <artifactId>restx-specs-tests</artifactId>
+          <version>${restx.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>io.restx</groupId>
           <artifactId>restx-jongo</artifactId>
+          <version>${restx.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>io.restx</groupId>
+          <artifactId>restx-jongo-specs-tests</artifactId>
           <version>${restx.version}</version>
       </dependency>
 

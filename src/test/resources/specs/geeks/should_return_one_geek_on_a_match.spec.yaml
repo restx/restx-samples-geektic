@@ -1,0 +1,10 @@
+title: should return one geek on a match
+given:
+  - time: 2013-05-16T20:38:00.892+02:00
+  - collection: geeks
+    data: |
+        { "_id" : { "$oid" : "519526f5207108cdfa4d0cc0"} , "nom" : "Doe" , "prenom" : "John" , "email" : "xav@acme.com" , "likes" : [ "test"]}
+wts:
+  - when: GET geeks?q=test
+    then: |
+        [{"prenom":"John","nom":"Doe","ville":null,"like1":"test","like2":null,"like3":null,"pictureUrl":"http://gravatar.com/avatar/1bb83f6117a62037695e38423d9ee7aa"}]

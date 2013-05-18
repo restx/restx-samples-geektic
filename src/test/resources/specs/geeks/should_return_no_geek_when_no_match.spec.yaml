@@ -1,0 +1,10 @@
+title: should return no geek on no match
+given:
+  - time: 2013-05-16T20:37:58.890+02:00
+  - collection: geeks
+    data: |
+        { "_id" : { "$oid" : "519526f5207108cdfa4d0cc0"} , "nom" : "Doe" , "prenom" : "John" , "email" : "xav@acme.com" , "likes" : [ "test"]}
+wts:
+  - when: GET geeks?q=teste
+    then: |
+        []

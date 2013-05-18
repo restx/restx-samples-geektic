@@ -1,0 +1,16 @@
+title: 010 geeks
+given:
+  - time: 2013-05-16T20:42:02.987+02:00
+  - collection: geeks
+    data: |
+        { "_id" : { "$oid" : "519526f5207108cdfa4d0cc0"} , "nom" : "Doe" , "prenom" : "John" , "email" : "xav@acme.com" , "likes" : [ "test"]}
+wts:
+  - when: |
+       POST geeks
+
+        {"prenom":"Xavier","nom":"Hanin","email":"xavier@acme.com","likes":["java","restx","web"]}
+    then: |
+        {"prenom":"Xavier","nom":"Hanin","ville":null,"like1":"java","like2":"restx","like3":"web","pictureUrl":"http://gravatar.com/avatar/f0baddc1a11b8043236f4bce4c61af91"}
+  - when: GET geeks?q=java
+    then: |
+        [{"prenom":"Xavier","nom":"Hanin","ville":null,"like1":"java","like2":"restx","like3":"web","pictureUrl":"http://gravatar.com/avatar/f0baddc1a11b8043236f4bce4c61af91"}]
