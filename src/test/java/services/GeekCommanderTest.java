@@ -4,6 +4,7 @@ import org.junit.Test;
 import resources.GeeksResource;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * User: xavierhanin
@@ -12,7 +13,8 @@ import static org.fest.assertions.Assertions.assertThat;
  */
 public class GeekCommanderTest {
 
-    private GeekCommander commander = new GeekCommander(new GeeksResource());
+    private GeeksResource geekResource = mock(GeeksResource.class);
+    private GeekCommander commander = new GeekCommander(geekResource);
 
     @Test
     public void should_parse_command() throws Exception {

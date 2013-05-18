@@ -1,38 +1,28 @@
 package resources;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import geeks.Geek;
 import geeks.Result;
 import restx.annotations.GET;
 import restx.annotations.POST;
 import restx.annotations.RestxResource;
+import restx.factory.Component;
+import restx.jongo.JongoCollection;
 
+import javax.inject.Named;
 import java.util.List;
 
-@RestxResource
+@Component @RestxResource
 public class GeeksResource {
-    private List<Geek> geeks;
+    private final JongoCollection geeks;
 
-    public GeeksResource() {
-        this(Lists.<Geek>newArrayList());
-    }
-
-    public GeeksResource(List<Geek> geeks) {
+    public GeeksResource(@Named("geeks") JongoCollection geeks) {
         this.geeks = geeks;
     }
 
     @POST("/geeks")
     public Result addGeek(Geek geek) {
-        for (int i = 0; i < geeks.size(); i++) {
-            Geek g = geeks.get(i);
-            if (Objects.equal(g.id(), geek.id())) {
-                geeks.set(i, geek);
-                return geek.toResult();
-            }
-        }
-
-        geeks.add(geek);
+        geeks.get().save(geek);
         return geek.toResult();
     }
 
@@ -40,7 +30,7 @@ public class GeeksResource {
   public List<Result> search(String q) {
     List<Result> results = Lists.newArrayList();
 
-    for (Geek geek : geeks) {
+    for (Geek geek : geeks.get().find().as(Geek.class)) {
       if (geek.matches(q)) {
         results.add(geek.toResult());
       }

@@ -1,48 +1,29 @@
 package twitter;
 
+import geeks.Geek;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import resources.GeeksResource;
 import services.GeekCommander;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-/**
- * User: xavierhanin
- * Date: 3/23/13
- * Time: 2:31 PM
- */
 public class GeekticTwitterStreamTest {
-    private GeeksResource geeksResource = new GeeksResource();
+    private GeeksResource geeksResource = mock(GeeksResource.class);
     private GeekCommander commander = new GeekCommander(geeksResource);
     private GeekticTwitterStream stream = new GeekticTwitterStream(commander);
+    private ArgumentCaptor<Geek> geekCaptor = ArgumentCaptor.forClass(Geek.class);
 
     @Test
     public void should_add_geek_on_status_sent() throws Exception {
-        int size = geeksResource.search("test").size();
-        stream.onStatus(new GeekticTwitterStream.TwitterStatus().setName("John Doe").setStatus("#likes test"));
-        assertThat(geeksResource.search("test")).hasSize(size + 1);
-    }
-
-    @Test
-    public void should_add__several_geeks_on_status_sent() throws Exception {
-        int size = geeksResource.search("test").size();
-        stream.onStatus(new GeekticTwitterStream.TwitterStatus().setName("John Doe").setStatus("#likes test"));
-        stream.onStatus(new GeekticTwitterStream.TwitterStatus().setName("John Black").setStatus("#likes java test"));
-        assertThat(geeksResource.search("test")).hasSize(size + 2);
-    }
-
-    @Test
-    public void should_update_geek_on_status_sent() throws Exception {
-        int sizeTest = geeksResource.search("test").size();
-        int sizeJava = geeksResource.search("java").size();
         stream.onStatus(new GeekticTwitterStream.TwitterStatus().setScreenName("johndoe").setName("John Doe").setStatus("#likes test"));
-        assertThat(geeksResource.search("test")).hasSize(sizeTest + 1);
-        assertThat(geeksResource.search("java")).hasSize(sizeJava);
-        stream.onStatus(new GeekticTwitterStream.TwitterStatus().setScreenName("johndoe").setName("John Doe").setStatus("#likes java test"));
-        assertThat(geeksResource.search("test")).hasSize(sizeTest + 1);
-        assertThat(geeksResource.search("java")).hasSize(sizeJava + 1);
-        stream.onStatus(new GeekticTwitterStream.TwitterStatus().setScreenName("johndoe").setName("John Doe").setStatus("#likes java"));
-        assertThat(geeksResource.search("test")).hasSize(sizeTest);
-        assertThat(geeksResource.search("java")).hasSize(sizeJava + 1);
+        verify(geeksResource).addGeek(geekCaptor.capture());
+        Geek geek = geekCaptor.getValue();
+        assertThat(geek.likes).containsExactly("test");
+        assertThat(geek.prenom).isEqualTo("John");
+        assertThat(geek.nom).isEqualTo("Doe");
+        assertThat(geek.twitterAccount).isEqualTo("johndoe");
     }
 }
