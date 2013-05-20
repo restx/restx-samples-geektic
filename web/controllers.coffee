@@ -1,6 +1,14 @@
-homeController = ($scope, $http, $location) ->
+homeController = ($scope, $http, $location, $timeout) ->
+  timer = false
+
   $scope.doSearch = ->
-    $scope.refresh()
+    $timeout.cancel(timer) if timer
+
+    timer = $timeout( ->
+      $scope.refresh()
+      timer = null
+    , 250)
+
 
   $scope.refresh = ->
     $location.url "?q=#{$scope.search}";
