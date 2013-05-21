@@ -17,10 +17,9 @@ public class GeekResourceSpecTest {
     public static RestxSpecRule rule = new RestxSpecRule("", new WebServerSupplier() {
         @Override
         public WebServer newWebServer(int port) {
-            return new SimpleWebServer("", "", port);
+            return SimpleWebServer.builder().setRouterPath("").setPort(port).build();
         }
     }, RestxSpecRule.defaultFactory());
-
 
     @Test
     public void should_add_a_geek() throws Exception {

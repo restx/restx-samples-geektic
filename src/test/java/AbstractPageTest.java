@@ -10,7 +10,7 @@ public abstract class AbstractPageTest extends PhantomJsTest {
     public static RestxSpecRule rule = new RestxSpecRule("", new WebServerSupplier() {
         @Override
         public WebServer newWebServer(int port) {
-            return new SimpleWebServer("", "", port);
+            return SimpleWebServer.builder().setRouterPath("").setPort(port).build();
         }
     }, RestxSpecRule.defaultFactory());
 

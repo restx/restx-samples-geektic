@@ -15,8 +15,8 @@ public class MainGeekticServer {
     }
 
     public void start(int port) throws Exception {
-        WebServer server = new SimpleWebServer("", WEB_APP_LOCATION, port);
-        System.setProperty("restx.baseUri", server.baseUrl());
+        WebServer server = SimpleWebServer.builder().setRouterPath("")
+                            .setAppBase(WEB_APP_LOCATION).setPort(port).build();
         server.startAndAwait();
     }
 }
