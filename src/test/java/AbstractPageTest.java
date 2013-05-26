@@ -7,12 +7,12 @@ import restx.tests.RestxSpecRule;
 
 public abstract class AbstractPageTest extends PhantomJsTest {
     @ClassRule
-    public static RestxSpecRule rule = new RestxSpecRule("", new WebServerSupplier() {
+    public static RestxSpecRule rule = (RestxSpecRule) new RestxSpecRule("", new WebServerSupplier() {
         @Override
         public WebServer newWebServer(int port) {
             return SimpleWebServer.builder().setRouterPath("").setPort(port).build();
         }
-    }, RestxSpecRule.defaultFactory());
+    }, RestxSpecRule.defaultFactory()).setFactoryLoadMode("onstartup");
 
     @Override
     protected String defaultUrl() {
