@@ -9,7 +9,7 @@ Original repo: https://github.com/CodeStory/code-story-geektic
 
 ## Running
 
-Build with `mvn package`
+Build with `mvn package dependency:copy-dependencies`
 
 Run with `java -Xmx512M -cp target/classes:target/dependency/* main.MainGeekticServer`
 
